@@ -1,0 +1,30 @@
+{% extends "home/base.html "%}
+{% load static %}
+
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'estilos/publico.css' %}"/>
+{% endblock %}
+
+
+{% block conteudo  %}
+<h2> Tela de locação de material. </h2>
+
+<br>
+<h2>Locar para: {{ locador.nome }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table class="table tb_ficha">
+    {{locacao_form.as_table}}
+    <tr><td>
+    <input type="submit" value="Salvar dados"/>
+    <a href="{% url 'publico:ficha' locador.id %}" class="btn btn-primary">Voltar.</a>
+    </td></tr>
+    </table>
+</form>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/locar.js' %}" ></script>
+{% endblock %}

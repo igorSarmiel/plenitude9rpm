@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-br" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'estilos/estilos.css' %}">
+    <script src="{% static 'js/jquery-3.3.1.js' %}" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="box">
+		<h2>Login</h2>
+		<form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+			<div class="inputBox">
+                <input type="text" name="username"/>
+				<label for="">Usuário</label>
+			</div>
+			<div class="inputBox">
+				<input type="password" name="password"/>
+				<label for="">Senha</label>
+			</div>
+			<input type="submit" name="" value="Entrar.">
+		</form>
+	</div>
+
+  </body>
+</html>

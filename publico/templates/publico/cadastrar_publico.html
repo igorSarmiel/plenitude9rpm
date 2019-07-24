@@ -1,0 +1,26 @@
+{% extends "home/base.html "%}
+{% load static %}
+
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'estilos/publico.css' %}"/>
+{% endblock %}
+
+{% block conteudo  %}
+
+<h2> Tela de cadastro de publico </h2>
+<div class="box_form">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        {{publico_form.as_table}}
+        </table>
+        <input type="submit" value="Enviar dados." id="btn_submit"/>
+        <a href="{% url 'publico:listar' %}" class="btn btn-primary">Voltar.</a>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/publico.js' %}" ></script>
+{% endblock %}

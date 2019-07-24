@@ -1,0 +1,155 @@
+{% extends "home/base.html "%}
+
+{% load static %}
+
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'estilos/publico.css' %}"/>
+{% endblock %}
+
+
+{% block conteudo  %}
+<!-- Modal confirma deletação -->
+<div id="confirm-delete" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="icon-box">
+					<i class="material-icons">&#xE5CD;</i>
+				</div>
+				<h4 class="modal-title">Tem certeza ?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+				<a href="" id="btn_ok"><button type="button" class="btn btn-danger">Sim, apagar registro.</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal liberação de material -->
+<div id="confirm-liberacao" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<h2 class="modal-title">Liberar esse material ?</h2>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+				<a href="" id="btn_ok_conf_liber"><button type="button" class="btn btn-primary">Sim, liberar.</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<h2> Tela de visualização dos dados. </h2>
+
+<table class="table tb_ficha">
+	<tbody>
+    <tr><td scope="col">Nome: {{dados.nome.upper}}</td> <td>Mãe: {{dados.mae.upper}}</td></tr>
+    <tr><td>Idade: {{idade}} / Nasceu em: {{dados.data_nascimento}}</td></tr>
+    <tr><td>Reside: {{dados.logradouro.upper}} Nr: {{ dados.numero}} </td><td>Bairro: {{dados.bairro.upper}}</td></tr>
+    <tr><td>Compl. {{dados.complemento.upper}}</td><td style="width:100px;">Tel. 1: {{dados.telefone1}}</td></tr>
+    <tr><td>Lotado: {{dados.lotacao}} - Matricula: {{dados.matricula}}</td><td style="width:100px;">Tel. 2: {{dados.telefone2}}</td></tr>
+    </tbody>
+</table>
+	<table class="table tb_ficha">
+		<tr scope="row">
+		<td scope="col">
+			<a href="{% url 'publico:cad_dependentes' dados.id %}"><button class="btn btn-primary"> Cadastrar Dependente.</button></a>
+		</td>
+		<td scope="col">
+        <a href="{% url 'publico:editar' dados.id %}"><button class="btn btn-success"> Editar Dados</button></a>
+		</td>
+		<td scope="col">
+        <button class="btn btn-danger" id="btn_delete" data-id="{{ dados.id }}"> Apagar Cadastro</button>
+		</td>
+		<td scope="col">
+		<a href="{% url 'publico:obs_publico' dados.id %}"><button class="btn btn-info">Observações.</button></a>
+		</td>
+		<td scope="col">
+		<a class="btn btn-dark" href="{% url 'publico:locar' dados.id %}">Locar Material</a>
+		</td>
+		<td scope="col">
+		<a href="{% url 'publico:listar' %}" class="btn btn-warning">voltar</a>
+		</td>
+		</tr>
+	</table>
+
+<br>
+
+<h2>Dependentes:</h2>
+<div>
+	{% if dependentes %}
+	<table class="table tb_ficha" id="tb-dep">
+		<th scope="row"><tr><td scope="col">NOME</td><td scope="col">DATA NASCIMENTO</td><td scope="col">PARENTESCO</td><td>Ações</td></tr></th>
+		{% for dep in dependentes %}
+			<tr>
+				<td scope="col">{{dep.nome.upper}}</td>
+				<td scope="col">{{dep.data_nascimento}}</td>
+				<td scope="col" >{{dep.parentesco}}</td>
+				<td>
+					<a class="btn btn-success" href="{% url 'publico:editar_dependentes' dep.id dados.id %}">Editar</a>
+					<button data-resp="{{dados.id}}" data-id="{{dep.id}}" class="btn btn-danger del_dependente">Deletar</button>
+					<a href="{% url 'publico:obs_dependente' dep.id dados.id %}"><button class="btn btn-info">Obs.</button></a>
+
+				</td>
+			</tr>
+		</table>
+			{% endfor %}
+		{% else %}
+	<table class="table tb_ficha">
+		<tr><td>Não há dependentes cadastrados.</td></tr>
+	</table>
+		{% endif %}
+
+</div>
+
+<br>
+<h2>Locações feitas:</h2>
+<div>
+	{% if locacoes%}
+	<table class="table tb_ficha">
+	<tr scope="row">
+		<td scope="col">Material</td>
+		<td scope="col">Data Locado</td>
+		<td scope="col">Ações</td>
+	</tr>
+		<tbody>
+		{% for locacao in locacoes %}
+		<tr scope="row">
+			<td scope="col">{{ locacao.material }}</td>
+			<td scope="col">{{ locacao.data_locado}}</td>
+			<td scope="col">
+				<button data-resp="{{dados.id}}"
+						data-id="{{locacao.material.id}}"
+						id="btn_liberar_material"
+						class="btn btn-info">Liberar Material</button>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	{% else %}
+	<table class="table tb_ficha">
+	<tbody>
+		<tr scope="row">
+			<td>Não há locações feitas.</td>
+		</tr>
+	</tbody>
+	{% endif %}
+</div>
+
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/publico.js' %}" ></script>
+{% endblock %}

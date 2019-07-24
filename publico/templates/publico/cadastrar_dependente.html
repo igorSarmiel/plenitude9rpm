@@ -1,0 +1,29 @@
+{% extends "home/base.html "%}
+{% load static %}
+
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'estilos/publico.css' %}"/>
+{% endblock %}
+
+{% block conteudo  %}
+
+<h2> Tela de cadastro de dependentes de {{ responsavel.nome.upper }} </h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table class="table tb_ficha">
+    {{dependente_form.as_table}}
+    <tr scope="row">
+        <td scope="col">
+            <input type="submit" value="Enviar dados." />
+            <a href="{% url 'publico:ficha' responsavel.id %}" class="btn btn-primary">Voltar</a>
+        </td>
+    </tr>
+    </table>
+</form>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/publico.js' %}" ></script>
+{% endblock %}

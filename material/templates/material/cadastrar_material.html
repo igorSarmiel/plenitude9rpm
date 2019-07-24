@@ -1,0 +1,20 @@
+{% extends "home/base.html "%}
+{% load static %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'estilos/material.css' %}"/>
+{% endblock %}
+
+{% block conteudo  %}
+
+<h2> Tela de cadastro dos materiais. </h2>
+
+<div class="box_form">
+    <form method="POST">
+        {% csrf_token %}
+        {{ material_form.as_p }}
+        <input type="submit" value="Enviar dados" />
+        <a href="{% url 'material:listar' %}" class="btn btn-primary">Cancelar.</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "home/base.html "%}
+{% load static %}
+
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'estilos/material.css' %}"/>
+{% endblock %}
+
+{% block conteudo  %}
+<div id="confirm-delete" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="icon-box">
+					<i class="material-icons">&#xE5CD;</i>
+				</div>
+				<h4 class="modal-title">Tem certeza ?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+				<a href="" id="btn_ok"><button type="button" class="btn btn-danger">Sim, apagar registro.</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h2> Tela de listagem dos materiais. </h2>
+<div style="margin-left:20%;">
+<a href="{% url 'home' %}" class="btn">Página inicial.</a>
+<a href="{% url 'material:cadastrar'%}" class="btn">Cadastrar</a>
+</div>
+<table class="table table-hover tb_ficha" >
+	<thead style="background-color:rgba(135,206,250,0.5);">
+		<tr>
+			<th scope="col">Nr</th>
+			<th scope="col">Tipo</th>
+			<th scope="col">Caracteristica.</th>
+			<th scope="col">Situação</th>
+			<th scope="col">Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for material in materiais %}
+    <tr scope="row" style="text-transform: uppercase;">
+		<td>{{ material.nr }}</td>
+		<td>{{ material.tipo }}</td>
+		<td>{{ material.caracteristicas }}</td>
+		{% if material.locado == False %}
+			<td style="color:#00FF00">Disponivel</td>
+		{% else %}
+			<td style="color:#FF0000; ">Locado</td>
+		{% endif %}
+		<td>
+        <a href="{% url 'material:editar' material.id %}"><button class="btn btn-info">Editar</button></a>
+        <button data-id="{{ material.id }}" class="btn btn-danger btn_delete">Apagar</button>
+		</td>
+    </tr>
+{% endfor %}
+	</tbody>
+</table>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/material.js' %}" ></script>
+{% endblock %}

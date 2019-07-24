@@ -1,0 +1,40 @@
+{% extends "home/base.html "%}
+{% load static %}
+
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'estilos/publico.css' %}"/>
+{% endblock %}
+
+{% block conteudo  %}
+<h2> Tela de listagem do público. </h2>
+<div style="margin-left:20%;">
+<a href="{% url 'home' %}" class="btn">Página inicial.</a>
+<a href="{% url 'publico:cadastrar' %}" class="btn">Cadastrar publico.</a>
+
+<table class="table table-hover tb_list">
+	<thead>
+		<tr>
+			<th scope="col" style="width:50px;">NR</th>
+			<th scope="col">Nome:</th>
+			<th scope="col">Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for publico in publicos %}
+        <tr>
+            <td style="text-align:center; width:50px;">
+                {{ publico.id }}
+            </td>
+            <td>
+                {{ publico.nome.upper }}
+            </td>
+            <td>
+                <a href="{% url 'publico:ficha' publico.id %}" >Dados completos.</a>
+            </td>
+        </tr>
+
+    {% endfor%}
+    </tbody>
+</table>
+</div>
+{% endblock %}

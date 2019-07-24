@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block conteudo  %}
+{% if user.is_authenticated %}
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#B0C4DE;" >
+    <a class="navbar-brand" href="#">
+    <img src="{% static 'imgs/logo.jpg'%}" width="30" height="30" alt="">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Usuário: <strong>{{ user.username }}</strong></a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="{% url 'password_change' %}">Mudar sua senha.</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="{% url 'logout' %}" class="btn">Sair</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="{% url 'material:listar' %}" class="btn" >Material</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="{% url 'publico:listar' %}" class="btn">Público</a>
+            </li>
+        </ul>
+
+    </div>
+  </nav>
+
+
+{% else %}
+    <div class="box">
+        <h2>Programa Plenitude.</h2>
+        <a href="{% url 'login'%}" style="align:center;">Entrar</a>
+    </div>
+{% endif %}
+
+
+{% endblock %}
