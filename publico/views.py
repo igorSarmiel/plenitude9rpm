@@ -156,7 +156,6 @@ def locar_material(request, id):
             Material = apps.get_model(app_label="material", model_name="Material")
             material = Material.objects.get(pk=locacao_form['material'].value())
             material.locado = True
-            material.locador = locacao_form['locador'].value()
             material.save()
             return redirect('/publico/ficha/'+str(id))
         else:

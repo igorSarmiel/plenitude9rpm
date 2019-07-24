@@ -93,3 +93,32 @@ body {
 	}
 }
 
+/*===========================*/
+.tb_ficha{
+    margin-left:30%;
+    width:500px;
+    background-color:rgba(0,0,0,0.4);
+    box-shadow: 0 15px 25px rgba(0,0,0,.5);
+	border-radius: 10px;
+}
+
+.tb_ficha td{
+    width:200px;
+    color:#87CEFA;
+    font-size: 18px;
+}
+
+#aga2{
+    font-family: "Times New Roman", Times, serif;
+    color:#0000FF;
+    font-size: 30px;
+    text-align: center;
+    text-decoration: underline;
+    background-color:rgba(255,255,255, 0.7)
+}
+
+#pmsn{
+    font-family: "Times New Roman", Times, serif;
+    color:#FF0000;
+    font-size: 30px;
+}
