@@ -29,8 +29,9 @@
 
 <h2> Tela de listagem dos materiais. </h2>
 <div style="margin-left:20%;">
-<a href="{% url 'home' %}" class="btn">Página inicial.</a>
-<a href="{% url 'material:cadastrar'%}" class="btn">Cadastrar</a>
+<a href="{% url 'home' %}" class="btn btn-outline-primary">Página inicial.</a>
+<a href="{% url 'material:cadastrar'%}" class="btn btn-outline-primary">Cadastrar</a>
+<a href="{% url 'material:locacoes_ativas'%}" class="btn btn-outline-primary">Locações ativas.</a>
 </div>
 <table class="table table-hover tb_ficha" >
 	<thead>
@@ -45,7 +46,7 @@
 	<tbody>
 	{% for material in materiais %}
     <tr scope="row" style="text-transform: uppercase;">
-		<td>{{ material.nr }}</td>
+		<td>{{ material.id }}</td>
 		<td>{{ material.tipo }}</td>
 		<td>{{ material.caracteristicas }}</td>
 		{% if material.locado == False %}

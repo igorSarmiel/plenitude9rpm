@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Material
 from .forms import Material_form
+from django.apps import apps
+from datetime import datetime
 
 @login_required
 def listar_material(request):
@@ -46,3 +48,23 @@ def liberar_material(request, id_mat, id_resp):
     material.locado = False
     material.save()
     return redirect("/publico/ficha/"+str(id_resp))
+
+def contagem_dias(dia_locado):
+    hoje = datetime.now().date()
+    dif = hoje - dia_locado
+    return dif.days
+
+
+@login_required
+def locacoes_ativas(request):
+    locacoes = apps.get_model(app_label="publico", model_name="Locacao")
+    ativos = Material.objects.filter(locado=True)
+    lista_ativos = []
+    for ativo in ativos:
+        locados = locacoes.objects.filter(material=ativo.id)
+        l = len(locados)
+        loc = locados[l-1]
+        lista_ativos.append((ativo, loc.locador.id, loc.locador, contagem_dias(loc.data_locado)))
+
+    return render(request, 'material/locacoes_ativas.html', {"ativos":lista_ativos, })
+

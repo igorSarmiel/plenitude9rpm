@@ -127,7 +127,7 @@ h2{
 .tb_ficha{
     margin-left:20%;
     width:900px;
-    background-color:rgba(0,0,0,0.4);
+    background-color:rgba(0,0,0,0.7);
     box-shadow: 0 15px 25px rgba(0,0,0,.5);
 	border-radius: 10px;
 }
@@ -140,12 +140,18 @@ h2{
 
 .tb_list{
     width:800px;
-    background-color:rgba(0,0,0,0.4);
+    background-color:rgba(0,0,0,0.7);
     box-shadow: 0 15px 25px rgba(0,0,0,.5);
 	border-radius: 10px;
 }
 
 .tb_list td{
+    width:500px;
+    color:#87CEFA;
+    font-size: 18px;
+}
+
+.tb_list th{
     width:500px;
     color:#87CEFA;
     font-size: 18px;
@@ -159,4 +165,9 @@ input{
     width:50px;
     font-size: 12px;
 
+}
+
+.tb_ficha label{
+    color:#00FF00;
+    font-size: 18px;
 }
