@@ -97,7 +97,7 @@ body {
 .tb_ficha{
     margin-left:30%;
     width:500px;
-    background-color:rgba(0,0,0,0.4);
+    background-color:rgba(0,0,0,0.7);
     box-shadow: 0 15px 25px rgba(0,0,0,.5);
 	border-radius: 10px;
 }

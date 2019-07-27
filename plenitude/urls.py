@@ -25,6 +25,7 @@ urlpatterns = [
     path('contas/login', views.log_in, name="login"),
     path('contas/logout', views.log_out, name='logout'),
     path('contas/password_change/',views.password_change, name="password_change"),
+    path('listar_acessos/<str:usuario>',views.listar_acessos, name="listar_acessos"),
     path('material/', include("material.urls"), name="material"),
     path('publico/', include("publico.urls"), name="publico"),
 
