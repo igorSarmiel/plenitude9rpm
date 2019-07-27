@@ -46,11 +46,11 @@ def deletar(request, id):
     registro.delete()
     return redirect('publico:listar')
 
+
 def idade(nasc):
     hoje = datetime.now().date()
     dif = hoje - nasc
     return floor(dif.days/365)
-
 
 @login_required
 def ficha(request, id):
@@ -147,14 +147,33 @@ def obs_dependente(request, id, resp):
                   {'obs_dependente_form':obs_dependente_form, 'responsavel':responsavel })
 
 
+def altera_formato_data(data):
+    # altera o formato das datas
+    data_locado = data.split("/")
+    AAAA = data_locado[2]
+    MM = data_locado[1]
+    DD = data_locado[0]
+    return AAAA+"-"+MM+"-"+DD
+
 @login_required
 def locar_material(request, id):
     if request.method == "POST":
         locacao_form = Locacao_form(request.POST)
         if locacao_form.is_valid():
-            locacao_form.save()
+            #busca as instancias de publico e material
+            locador = Publico.objects.get(pk=locacao_form['locador'].value())
+
             Material = apps.get_model(app_label="material", model_name="Material")
             material = Material.objects.get(pk=locacao_form['material'].value())
+
+            # Salva os dados no models
+            locacao = Locacao(material=material, locador=locador,
+                              data_locado=altera_formato_data(locacao_form['data_locado'].value()),
+                              data_devolucao=altera_formato_data(locacao_form['data_devolucao'].value()),
+                              observacao=locacao_form['observacao'].value())
+            locacao.save()
+
+            # busca o material e seta como locado
             material.locado = True
             material.save()
             return redirect('/publico/ficha/'+str(id))
@@ -164,6 +183,8 @@ def locar_material(request, id):
                                                                    'locador': locador,})
     else:
         locador = Publico.objects.get(pk=id)
-        locacao_form = Locacao_form(initial={'locador':locador.id,}, instance=locador)
+        locacao_form = Locacao_form(initial={'locador':locador.id,
+                                             'data_locado':datetime.now().date(),
+                                             })
         return render(request, 'publico/locar_material.html', {'locacao_form':locacao_form,
                                                                     'locador':locador, })

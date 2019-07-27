@@ -1,6 +1,7 @@
 from .models import Publico, Dependentes, Locacao
 from django.forms import ModelForm
 from django import forms
+from django.apps import apps
 
 class Publico_form(ModelForm):
     class Meta:
@@ -41,13 +42,12 @@ class Obs_dependente_form(ModelForm):
             "observacoes": forms.Textarea(attrs={'cols': 80, 'rows': 15}),
         }
 
-class Locacao_form(ModelForm):
-    class Meta:
-        model = Locacao
-        fields = "__all__"
-        widgets ={
-            "locador":forms.HiddenInput(),
-            "data_locado":forms.DateInput(attrs={"class":"data",}),
-            "data_devolucao":forms.DateInput(attrs={'class':'data'}),
-            "observacoes": forms.Textarea(attrs={'cols': 80, 'rows': 10}),
-        }
+class Locacao_form(forms.Form):
+    Materiais = apps.get_model(app_label="material", model_name="Material")
+
+    material = forms.ModelChoiceField(queryset=Materiais.objects.filter(locado=False), empty_label="Materiais disponiveis")
+    locador = forms.CharField(max_length=10, widget=forms.HiddenInput())
+    data_locado = forms.DateField(widget=forms.DateInput(attrs={"class":"data",}))
+    data_devolucao = forms.DateField(widget=forms.DateInput(attrs={"class":"data",}))
+    observacao = forms.CharField(max_length=800, widget=forms.Textarea(attrs={'cols': 80, 'rows': 10}), required=False)
+
