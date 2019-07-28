@@ -3,10 +3,9 @@ from django.shortcuts import redirect, render
 import os
 import datetime
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_PATH = BASE_DIR+"\\logs\\log_user.txt"
-
 def log_acessos(user, status):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    LOG_PATH = BASE_DIR + "/logs/log_user.txt"
     now = datetime.datetime.now()
     ano = now.strftime("%Y")
     mes = now.strftime("%m")
@@ -15,19 +14,27 @@ def log_acessos(user, status):
     minutos = now.strftime("%M")
     texto = user +" - "+status +" em "+dia+"/"+mes+"/"+ano+" as "+horas+":"+minutos+" horas"+"\n"
     if os.path.exists(LOG_PATH):
-        with open(LOG_PATH,'a', encoding='utf8') as log:
+        with open(LOG_PATH,'a') as log:
             log.write(texto)
             log.close()
     else:
-        with open(LOG_PATH,'w', encoding='utf8') as log:
+        with open(LOG_PATH,'w') as log:
             log.write(texto)
             log.close()
 
 def listar_acessos(request, usuario):
-    with open(LOG_PATH, 'r', encoding="utf8") as log:
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    LOG_PATH = BASE_DIR + "/logs/log_user.txt"
+    lista = []
+    with open(LOG_PATH, 'r') as log:
         acessos = log.readlines()
         log.close()
-    return render(request, "registration/lista_acessos.html",{"acessos":acessos})
+        for acesso in acessos:
+            user = acesso.split("-")[0].strip()
+            if user == usuario:
+                lista.append(acesso)
+
+    return render(request, "registration/lista_acessos.html",{"acessos":lista})
 
 
 
