@@ -3,9 +3,10 @@ from django.shortcuts import redirect, render
 import os
 import datetime
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG_PATH = BASE_DIR + "/logs/log_user.txt"
+
 def log_acessos(user, status):
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    LOG_PATH = BASE_DIR + "/logs/log_user.txt"
     now = datetime.datetime.now()
     ano = now.strftime("%Y")
     mes = now.strftime("%m")
@@ -23,18 +24,16 @@ def log_acessos(user, status):
             log.close()
 
 def listar_acessos(request, usuario):
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    LOG_PATH = BASE_DIR + "/logs/log_user.txt"
     lista = []
-    with open(LOG_PATH, 'r') as log:
-        acessos = log.readlines()
-        log.close()
-        for acesso in acessos:
-            user = acesso.split("-")[0].strip()
-            if user == usuario:
-                lista.append(acesso)
+#    with open(LOG_PATH, 'r') as log:
+#        acessos = log.readlines()
+#        log.close()
+#        for acesso in acessos:
+#            user = acesso.split("-")[0].strip()
+#            if user == usuario:
+#                lista.append(acesso)
 
-    return render(request, "registration/lista_acessos.html",{"acessos":lista})
+    return render(request, "registration/lista_acessos.html", {"acessos": lista})
 
 
 
@@ -45,7 +44,7 @@ def log_in(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            log_acessos(username, "Acessou")
+            #log_acessos(username, "Acessou")
             return redirect('home')
         else:
             return render(request, 'registration/login.html', )
@@ -54,7 +53,7 @@ def log_in(request):
 
 
 def log_out(request):
-    log_acessos(request.user.username, "Saiu")
+    #log_acessos(request.user.username, "Saiu")
     logout(request)
     return redirect('/')
 
