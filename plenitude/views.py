@@ -19,7 +19,7 @@ def log_acessos(user, status):
             log.write(texto)
             log.close()
     else:
-        with open(LOG_PATH,'w') as log:
+        with open(LOG_PATH,'a') as log:
             log.write(texto)
             log.close()
 
@@ -75,3 +75,4 @@ def password_change(request):
 if __name__ == "__main__":
     print(BASE_DIR)
     print(LOG_PATH)
+    print(os.path.exists(LOG_PATH))
