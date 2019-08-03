@@ -3,8 +3,10 @@ from django.shortcuts import redirect, render
 import os
 import datetime
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_PATH = BASE_DIR + "\\logs\\log_user.log"
+LOG_PATH = BASE_DIR + "\\logs\\log_user.txt"
+
 
 def log_acessos(user, status):
     now = datetime.datetime.now()
@@ -22,6 +24,8 @@ def log_acessos(user, status):
         with open(LOG_PATH,'w') as log:
             log.write(texto)
             log.close()
+
+
 
 def listar_acessos(request, usuario):
     lista = []
@@ -52,10 +56,13 @@ def log_in(request):
         return render(request, 'registration/login.html', )
 
 
+
 def log_out(request):
     log_acessos(request.user.username, "Saiu")
     logout(request)
     return redirect('/')
+
+
 
 def password_change(request):
     if request.method == "POST":
