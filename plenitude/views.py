@@ -4,7 +4,7 @@ import os
 import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_PATH = os.path.join(BASE_DIR, "/logs/log_user.txt")
+LOG_PATH = BASE_DIR + "\\logs\\log_user.txt"
 
 def log_acessos(user, status):
     now = datetime.datetime.now()
@@ -71,3 +71,7 @@ def password_change(request):
             return render(request, "registration/password_change_form.html",{"msn":"As senhas não conferem. Tente de novo."} )
     else:
         return render(request, "registration/password_change_form.html",)
+
+if __name__ == "__main__":
+    print(BASE_DIR)
+    print(LOG_PATH)
