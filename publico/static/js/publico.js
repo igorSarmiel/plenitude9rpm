@@ -22,7 +22,7 @@ $(document).ready(function(){
 
     });
 
-    $("#btn_liberar_material").on('click', function(event){
+    $(".btn_liberar_material").on('click', function(event){
         var id_mat = $(this).data('id');
         var id_resp = $(this).data('resp');
         var modal = $("#confirm-liberacao");

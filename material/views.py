@@ -68,3 +68,17 @@ def locacoes_ativas(request):
 
     return render(request, 'material/locacoes_ativas.html', {"ativos":lista_ativos, })
 
+
+def contagem_material(request):
+    #locacoes = apps.get_model(app_label="publico", model_name="Locacao")
+    tipos = ['ANDADOR', 'MULETA', 'CADEIRA_RODAS','CADEIRA_BANHO', 'CAMA',
+              'COLCHAO', 'TIPOIA', 'COLAR_CERVICAL', 'BOTA_ORTOPEDICA', 'OUTROS', ]
+    total = 0
+    dados = []
+    for tipo in tipos:
+        #conta a quantidade de cada tipo de material
+        subtotal = Material.objects.filter(tipo=tipo).count()
+        icon = "img/{}.jpg".format(tipo)
+        dados.append([tipo, subtotal, icon])
+        total += subtotal
+    return render(request, 'material/contagem_material.html', {"dados":dados, "total":total})

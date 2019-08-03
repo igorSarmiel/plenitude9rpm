@@ -8,4 +8,7 @@ $(".btn_delete").on('click', function(event){
         modal.modal('show');
     });
 
+
+
+
 });

@@ -10,4 +10,5 @@ urlpatterns=[
     path('deletar/<int:id>', views.deletar_material, name='deletar'),
     path('liberar_material/<int:id_mat>/<int:id_resp>', views.liberar_material, name='liberar_material'),
     path('locacoes_ativas/', views.locacoes_ativas, name='locacoes_ativas'),
+    path('contagem_material/', views.contagem_material, name='contagem_material'),
 ]
