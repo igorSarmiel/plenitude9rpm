@@ -16,10 +16,14 @@ def log_acessos(user, status):
     horas = now.strftime("%H")
     minutos = now.strftime("%M")
     texto = user +" - "+status +" em "+dia+"/"+mes+"/"+ano+" as "+horas+":"+minutos+" horas"+"\n"
-    log = open(LOG_PATH,'a')
-    log.write(texto)
-    log.close()
-
+    if os.path.isfile(LOG_PATH):
+        with open(LOG_PATH,'a') as log:
+            log.write(texto)
+            log.close()
+    else:
+        with open(LOG_PATH,'w') as log:
+            log.write(texto)
+            log.close()
 
 
 def listar_acessos(request, usuario):
