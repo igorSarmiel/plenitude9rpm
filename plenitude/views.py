@@ -19,7 +19,7 @@ def log_acessos(user, status):
             log.write(texto)
             log.close()
     else:
-        with open(LOG_PATH,'a') as log:
+        with open(LOG_PATH,'w+') as log:
             log.write(texto)
             log.close()
 
