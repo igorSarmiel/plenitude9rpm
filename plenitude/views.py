@@ -5,7 +5,7 @@ import datetime
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_PATH = BASE_DIR + "\\logs\\log_user.txt"
+LOG_PATH = BASE_DIR + "/logs/log_user.txt"
 
 
 def log_acessos(user, status):
