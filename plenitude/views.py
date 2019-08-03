@@ -16,14 +16,9 @@ def log_acessos(user, status):
     horas = now.strftime("%H")
     minutos = now.strftime("%M")
     texto = user +" - "+status +" em "+dia+"/"+mes+"/"+ano+" as "+horas+":"+minutos+" horas"+"\n"
-    if os.path.exists(LOG_PATH):
-        with open(LOG_PATH,'a') as log:
-            log.write(texto)
-            log.close()
-    else:
-        with open(LOG_PATH,'w') as log:
-            log.write(texto)
-            log.close()
+    with open(LOG_PATH,'a') as log:
+        log.write(texto)
+        log.close()
 
 
 
